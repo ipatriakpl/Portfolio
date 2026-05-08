@@ -23,7 +23,7 @@
             opacity: 0.03;
             z-index: 9999;
             pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3仿真%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
         * {
@@ -38,7 +38,7 @@
             overflow-x: hidden;
         }
 
-        /* Nawigacja - bardziej surowa */
+        /* Nawigacja */
         nav {
             position: fixed;
             top: 0; width: 100%;
@@ -47,7 +47,7 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            mix-blend-mode: difference; /* Napis będzie zmieniał kolor zależnie od tła */
+            mix-blend-mode: difference;
         }
 
         .logo {
@@ -72,7 +72,7 @@
 
         nav a:hover { opacity: 0.5; }
 
-        /* Hero - usunięty symetryczny gradient na rzecz brutalistycznego stylu */
+        /* HERO SECTION */
         .hero {
             height: 100vh;
             display: flex;
@@ -81,18 +81,69 @@
             padding: 0 10%;
         }
 
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 6rem);
-            line-height: 0.9;
-            font-weight: 700;
-            letter-spacing: -3px;
+        .hero-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 40px;
+            flex-wrap: wrap;
             margin-bottom: 20px;
         }
 
-        .hero h1 span {
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 0.85;
+            font-weight: 700;
+            letter-spacing: -3px;
+        }
+
+        /* Glow na NIE NUDZI */
+        .glow-text {
             display: block;
             color: var(--accent);
             padding-left: 5vw;
+            text-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            from { text-shadow: 0 0 10px rgba(0, 255, 102, 0.5), 0 0 20px rgba(0, 255, 102, 0.2); }
+            to { text-shadow: 0 0 25px rgba(0, 255, 102, 0.8), 0 0 40px rgba(0, 255, 102, 0.4); }
+        }
+
+        /* Ticker wypełniający lukę */
+        .ticker-wrap {
+            flex: 1;
+            min-width: 300px;
+            overflow: hidden;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+            padding: 12px 0;
+            margin-bottom: 1.5vw; /* optyczne wyrównanie do linii tekstu */
+        }
+
+        .ticker {
+            display: inline-block;
+            white-space: nowrap;
+            animation: tickerMove 20s linear infinite;
+        }
+
+        .ticker span {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            margin-right: 50px;
+        }
+
+        .ticker span::after {
+            content: " — ";
+            margin-left: 25px;
+            color: var(--accent);
+        }
+
+        @keyframes tickerMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         .hero p {
@@ -102,7 +153,6 @@
             margin-bottom: 40px;
         }
 
-        /* Przyciski - "surowy" styl bez zaokrągleń AI */
         .btn {
             display: inline-block;
             padding: 18px 40px;
@@ -132,7 +182,7 @@
             display: block;
         }
 
-        /* O mnie - asymetryczny layout */
+        /* O mnie */
         .about-grid {
             display: grid;
             grid-template-columns: 1.5fr 1fr;
@@ -150,7 +200,7 @@
             align-items: center;
         }
 
-        /* Portfolio - karty bez cieni, z ostrymi krawędziami */
+        /* Portfolio */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -166,18 +216,12 @@
             overflow: hidden;
         }
 
-        .video-card:hover img { transform: scale(1.05); }
-        .video-card img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: 0.5s; opacity: 0.6;
-        }
-
         .card-info {
             position: absolute;
             bottom: 20px; left: 20px;
         }
 
-        /* Kontakt - siatka w stylu "industrialnym" */
+        /* Kontakt */
         .contact-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -211,7 +255,8 @@
 
         @media (max-width: 768px) {
             .about-grid, .contact-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 3.5rem; }
+            .hero h1 { font-size: 3.2rem; }
+            .ticker-wrap { display: none; }
             nav ul { display: none; }
         }
     </style>
@@ -228,7 +273,26 @@
     </nav>
 
     <section class="hero">
-        <h1>EDYCJA, KTÓRA <span>NIE NUDZI.</span></h1>
+        <div class="hero-row">
+            <h1>EDYCJA, KTÓRA <span class="glow-text">NIE NUDZI.</span></h1>
+            
+            <div class="ticker-wrap">
+                <div class="ticker">
+                    <span>Retencja 85%</span>
+                    <span>Dynamiczne Hooki</span>
+                    <span>Sound Design</span>
+                    <span>Kolorowanie wideo</span>
+                    <span>Trend-setting</span>
+                    <!-- Powtórzenie dla płynności -->
+                    <span>Retencja 85%</span>
+                    <span>Dynamiczne Hooki</span>
+                    <span>Sound Design</span>
+                    <span>Kolorowanie wideo</span>
+                    <span>Trend-setting</span>
+                </div>
+            </div>
+        </div>
+        
         <p>Short-form content creator. Zamieniam surowy materiał w wiralowe formaty na TikTok, Reels i Shorts.</p>
         <a href="#portfolio" class="btn">Moje realizacje</a>
     </section>
@@ -296,7 +360,7 @@
     </section>
 
     <footer style="padding: 50px 10%; font-size: 0.7rem; color: #444; text-transform: uppercase; letter-spacing: 2px;">
-        Igor Patriak © 2026 // No templates used.
+        Igor Patriak © 2026 // Custom Build
     </footer>
 
     <script>
@@ -306,7 +370,6 @@
             setTimeout(() => el.classList.remove('copied'), 2000);
         }
 
-        // Prosta animacja pojawiania się przy scrollu
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
