@@ -107,20 +107,14 @@
             box-shadow: 0 0 20px var(--accent-glow);
             text-transform: uppercase;
             letter-spacing: 1px;
-            border: none; /* Dodane dla buttona */
-            cursor: pointer; /* Dodane dla buttona */
+            border: none;
+            cursor: pointer;
         }
 
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 0 30px var(--accent-color);
             background-color: #00cc52;
-        }
-
-        /* Klasa dodawana podczas kliknięcia */
-        .btn.copied {
-            background-color: #ffffff;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
         }
 
         /* === Wspólne style sekcji === */
@@ -203,29 +197,75 @@
             padding: 20px;
         }
 
-        .video-placeholder i {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            color: var(--accent-color);
-        }
-
-        /* === Kontakt === */
-        .contact-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        /* === Nowa Sekcja Kontaktowa === */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
+            width: 100%;
+            max-width: 1100px;
+            margin-top: 30px;
         }
 
-        .contact-info {
-            font-size: 1.2rem;
+        .contact-card {
+            background: var(--card-bg);
+            padding: 30px 20px;
+            border-radius: 20px;
             text-align: center;
+            text-decoration: none;
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
-        .contact-info a {
+        .contact-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 30px rgba(0, 255, 102, 0.15);
+        }
+
+        .contact-icon {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .contact-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #888;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .contact-value {
+            font-weight: 700;
+            font-size: 1rem;
             color: var(--accent-color);
-            text-decoration: none;
-            font-weight: bold;
+            word-break: break-all;
+        }
+
+        .copy-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-color);
+            color: #0f0f11;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            transform: translateY(101%);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card.copied .copy-overlay {
+            transform: translateY(0);
         }
 
         /* === Stopka === */
@@ -303,58 +343,49 @@
     <section id="portfolio">
         <h2 class="section-title">Wybrane realizacje</h2>
         <div class="portfolio-grid">
-            
-            <div class="video-card">
-                <div class="video-placeholder">
-                    <i>▶</i>
-                    <h3>Nazwa Projektu / Klient 1</h3>
-                    <p>Styl: Dynamiczny, Edukacyjny</p>
-                </div>
-            </div>
-
-            <div class="video-card">
-                <div class="video-placeholder">
-                    <i>▶</i>
-                    <h3>Nazwa Projektu / Klient 2</h3>
-                    <p>Styl: Rozrywka, Viral</p>
-                </div>
-            </div>
-
-            <div class="video-card">
-                <div class="video-placeholder">
-                    <i>▶</i>
-                    <h3>Nazwa Projektu / Klient 3</h3>
-                    <p>Styl: Podcast (Clipping)</p>
-                </div>
-            </div>
-            
-            <div class="video-card">
-                <div class="video-placeholder">
-                    <i>▶</i>
-                    <h3>Nazwa Projektu / Klient 4</h3>
-                    <p>Styl: Storytelling</p>
-                </div>
-            </div>
-
+            <div class="video-card"><div class="video-placeholder"><i>▶</i><h3>Projekt 1</h3><p>Styl: Dynamiczny</p></div></div>
+            <div class="video-card"><div class="video-placeholder"><i>▶</i><h3>Projekt 2</h3><p>Styl: Viral</p></div></div>
+            <div class="video-card"><div class="video-placeholder"><i>▶</i><h3>Projekt 3</h3><p>Styl: Podcast</p></div></div>
+            <div class="video-card"><div class="video-placeholder"><i>▶</i><h3>Projekt 4</h3><p>Styl: Storytelling</p></div></div>
         </div>
     </section>
 
     <!-- Sekcja Kontakt -->
     <section id="contact">
         <h2 class="section-title">Zróbmy coś razem</h2>
-        <div class="contact-container">
-            <p class="contact-info">Gotowy, aby przenieść swoje social media na wyższy poziom?</p>
+        <div class="contact-container" style="display: flex; flex-direction: column; align-items: center;">
+            <p class="contact-info">Wybierz najwygodniejszą drogę kontaktu:</p>
             
-            <!-- Zmieniony przycisk na <button> z id -->
-            <button id="copyBtn" class="btn">Skopiuj mój e-mail</button>
-            
-            <div class="contact-info" style="margin-top: 20px;">
-                <p>Lub znajdź mnie na:</p>
-                <p>
-                    <a href="#">Instagram</a> | 
-                    <a href="#">TikTok</a> | 
-                    <a href="#">LinkedIn</a>
-                </p>
+            <div class="contact-grid">
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/montażigor" target="_blank" class="contact-card">
+                    <span class="contact-icon">📸</span>
+                    <div class="contact-label">Instagram</div>
+                    <div class="contact-value">montażigor</div>
+                </a>
+
+                <!-- E-mail -->
+                <div class="contact-card" onclick="copyValue('i.patriakpl@gmail.com', this)">
+                    <span class="contact-icon">✉️</span>
+                    <div class="contact-label">Mail</div>
+                    <div class="contact-value">i.patriakpl@gmail.com</div>
+                    <div class="copy-overlay">SKOPIOWANO!</div>
+                </div>
+
+                <!-- Discord -->
+                <div class="contact-card" onclick="copyValue('drewniane_krzeslo', this)">
+                    <span class="contact-icon">💬</span>
+                    <div class="contact-label">Discord</div>
+                    <div class="contact-value">drewniane_krzeslo</div>
+                    <div class="copy-overlay">SKOPIOWANO!</div>
+                </div>
+
+                <!-- Telefon -->
+                <a href="tel:+48532410740" class="contact-card">
+                    <span class="contact-icon">📞</span>
+                    <div class="contact-label">Telefon</div>
+                    <div class="contact-value">532 410 740</div>
+                </a>
             </div>
         </div>
     </section>
@@ -364,39 +395,29 @@
         <p>&copy; 2026 Igor Patriak. Wszelkie prawa zastrzeżone.</p>
     </footer>
 
-    <!-- Skrypty -->
     <script>
         // Płynne przewijanie
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
             });
         });
 
-        // Kopiowanie e-maila do schowka
-        const copyBtn = document.getElementById('copyBtn');
-        const emailToCopy = 'kontakt@igorpatriak.pl'; // <-- Tutaj wstaw swój docelowy e-mail
-
-        copyBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText(emailToCopy).then(() => {
-                // Zmiana tekstu i wyglądu przycisku po udanym kopiowaniu
-                const originalText = copyBtn.innerText;
-                copyBtn.innerText = 'Skopiowano!';
-                copyBtn.classList.add('copied');
-
-                // Powrót do pierwotnego stanu po 2 sekundach
+        // Funkcja kopiowania
+        function copyValue(text, element) {
+            navigator.clipboard.writeText(text).then(() => {
+                element.classList.add('copied');
                 setTimeout(() => {
-                    copyBtn.innerText = originalText;
-                    copyBtn.classList.remove('copied');
-                }, 2000);
+                    element.classList.remove('copied');
+                }, 1500);
             }).catch(err => {
-                console.error('Nie udało się skopiować e-maila: ', err);
-                copyBtn.innerText = 'Błąd kopiowania';
+                console.error('Błąd kopiowania: ', err);
             });
-        });
+        }
     </script>
 </body>
 </html>
